@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mage Aurian — Fragments: Moments in Between</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0b;--bg-elevated:#111113;--text:#e8e6e3;--text-dim:#7a7872;--text-muted:#4a4944;--accent:#c8a87c;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+.site-grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;transition:background .5s,backdrop-filter .5s}
+nav.scrolled{background:rgba(10,10,11,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,168,124,.08)}
+.logo{font-family:var(--serif);font-size:1.25rem;font-weight:700;letter-spacing:-.02em;color:var(--text);cursor:pointer;text-decoration:none}.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:.7rem;font-weight:300;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .3s;position:relative}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:1px;background:var(--accent)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{width:24px;height:1.5px;background:var(--text);transition:all .3s;display:block}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}.hamburger.open span:nth-child(2){opacity:0}.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:99;background:rgba(10,10,11,.97);backdrop-filter:blur(30px);flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:2rem;color:var(--text-dim);text-decoration:none;transition:color .3s}
+.mobile-menu a:hover{color:var(--accent)}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(200,168,124,.06) 0%,transparent 70%),radial-gradient(ellipse 60% 80% at 20% 80%,rgba(100,80,60,.04) 0%,transparent 60%),var(--bg)}
+.hero-line{position:absolute;left:50%;width:1px;height:120px;background:linear-gradient(to bottom,transparent,var(--accent),transparent);opacity:.3}.hero-line-top{top:0}.hero-line-bot{bottom:0}
+.hero-content{position:relative;z-index:1}
+.hero-tag{font-family:var(--mono);font-size:.65rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;animation:fadeUp 1s ease both}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,8vw,7rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem;animation:fadeUp 1s .15s ease both}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:1.05rem;font-weight:300;color:var(--text-dim);max-width:480px;line-height:1.7;margin:0 auto 3rem;animation:fadeUp 1s .3s ease both}
+.hero-cta{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--mono);font-size:.7rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);padding:1rem 2.5rem;border:1px solid rgba(200,168,124,.25);background:transparent;transition:all .4s;animation:fadeUp 1s .45s ease both;text-decoration:none}
+.hero-cta:hover{background:rgba(200,168,124,.08);border-color:var(--accent);box-shadow:0 0 40px rgba(200,168,124,.1)}
+.hero-scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);animation:fadeUp 1s .6s ease both}
+.scroll-line{width:1px;height:40px;position:relative;overflow:hidden;background:rgba(200,168,124,.15)}
+.scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:1px;height:100%;background:var(--accent);animation:scrollPulse 2s ease-in-out infinite}
+section{padding:8rem 3rem;position:relative}
+.section-label{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.35em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem}
+.section-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.5rem);font-weight:400;letter-spacing:-.02em;margin-bottom:1rem;line-height:1.15}
+.section-title em{font-style:italic;color:var(--accent)}
+.section-desc{font-size:1rem;font-weight:300;color:var(--text-dim);max-width:560px;line-height:1.75;margin-bottom:4rem}
+.divider{width:60px;height:1px;background:rgba(200,168,124,.25);margin:0 0 4rem}
+.gallery-grid{columns:3;column-gap:1.25rem;max-width:1200px;margin:0 auto}
+.photo-card{break-inside:avoid;margin-bottom:1.25rem;border-radius:4px;overflow:hidden;position:relative;cursor:pointer;animation:fadeUp .6s ease both}
+.photo-grain{position:absolute;inset:0;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+.photo-overlay{position:absolute;bottom:0;left:0;right:0;padding:2rem 1.25rem 1.25rem;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);display:flex;flex-direction:column;gap:.25rem;opacity:0;transition:opacity .4s}
+.photo-card:hover .photo-overlay{opacity:1}
+.photo-category{font-family:var(--mono);font-size:.55rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.photo-title{font-family:var(--serif);font-size:1.1rem;color:var(--text)}
+.album-section{background:var(--bg-elevated)}
+.album-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;max-width:1100px;margin:0 auto;align-items:start}
+.album-art-wrapper{position:sticky;top:8rem}
+.album-art{aspect-ratio:1;border-radius:4px;background:linear-gradient(145deg,hsl(30,20%,12%) 0%,hsl(220,15%,8%) 50%,hsl(280,10%,6%) 100%);position:relative;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.5)}
+.album-art-grain{position:absolute;inset:0;opacity:.1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.album-art-text{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem}
+.album-art-text h3{font-family:var(--serif);font-size:1.8rem;font-weight:400;letter-spacing:-.02em;line-height:1.2}
+.album-art-text p{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-top:.5rem}
+.album-info h2{font-family:var(--serif);font-size:2.2rem;font-weight:400;letter-spacing:-.02em;margin-bottom:.5rem}
+.album-info h2 em{font-style:italic;color:var(--accent)}
+.album-meta{font-family:var(--mono);font-size:.65rem;font-weight:300;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;margin-bottom:1.5rem}
+.album-desc{font-size:.95rem;font-weight:300;color:var(--text-dim);line-height:1.8;margin-bottom:2.5rem}
+.tracklist{display:flex;flex-direction:column}
+.track{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.75rem;padding:1rem .75rem;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:all .2s;border-radius:4px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.track:hover,.track:active{background:rgba(200,168,124,.04)}
+.track.playing{background:rgba(200,168,124,.06)}
+.track-left{display:flex;align-items:center;gap:.75rem;min-width:0}
+.track-num{font-family:var(--mono);font-size:.7rem;font-weight:300;color:var(--text-muted);width:24px;text-align:center;flex-shrink:0}
+.track.playing .track-num{color:var(--accent)}
+.track-title{font-size:.9rem;font-weight:400;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track.playing .track-title{color:var(--accent)}
+.track-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.track-dur{font-family:var(--mono);font-size:.7rem;font-weight:300;color:var(--text-muted)}
+.track-arrow{color:var(--text-muted);font-size:.7rem;transition:color .2s}
+.track:hover .track-arrow,.track:active .track-arrow{color:var(--accent)}
+.streaming-links{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap}
+.stream-btn{font-family:var(--mono);font-size:.6rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);padding:.7rem 1.5rem;border:1px solid rgba(255,255,255,.08);background:transparent;cursor:pointer;transition:all .3s;border-radius:2px;text-decoration:none}
+.stream-btn:hover{color:var(--accent);border-color:rgba(200,168,124,.3);background:rgba(200,168,124,.05)}
+/* TRACK DETAIL */
+.track-detail{position:fixed;inset:0;z-index:150;background:var(--bg);transform:translateY(100%);transition:transform .5s cubic-bezier(.16,1,.3,1);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.track-detail.open{transform:translateY(0)}
+.td-top-bar{position:sticky;top:0;z-index:160;display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;background:rgba(10,10,11,.7);backdrop-filter:blur(15px)}
+.td-back{background:none;border:none;color:var(--text-dim);cursor:pointer;font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;transition:color .3s;padding:8px 4px;-webkit-tap-highlight-color:transparent}
+.td-back:hover,.td-back:active{color:var(--accent)}
+.td-close{background:none;border:1px solid rgba(255,255,255,.08);color:var(--text);cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .3s;-webkit-tap-highlight-color:transparent}
+.td-close:hover,.td-close:active{background:rgba(200,168,124,.15);color:var(--accent)}
+.td-hero{min-height:50vh;display:flex;align-items:flex-end;padding:3rem 2rem 3rem;position:relative;overflow:hidden}
+.td-hero-bg{position:absolute;inset:0}
+.td-hero-content{position:relative;z-index:1;max-width:700px;width:100%}
+.td-track-num{font-family:var(--mono);font-size:4rem;font-weight:300;color:rgba(200,168,124,.1);line-height:1;margin-bottom:-.25rem;letter-spacing:-.05em}
+.td-track-title{font-family:var(--serif);font-size:clamp(1.6rem,5vw,3rem);font-weight:400;line-height:1.15;letter-spacing:-.02em;margin-bottom:.5rem}
+.td-track-meta{font-family:var(--mono);font-size:.55rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.75rem}
+.td-player{display:flex;flex-direction:column;gap:.75rem;max-width:500px}
+.td-player-controls{display:flex;align-items:center;gap:1rem}
+.td-play-btn{width:50px;height:50px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--bg);transition:all .3s;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.td-play-btn:active{transform:scale(.95)}
+.td-progress-wrap{flex:1;display:flex;flex-direction:column;gap:.3rem}
+.td-progress{width:100%;height:6px;background:rgba(255,255,255,.08);border-radius:3px;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
+.td-progress-fill{height:100%;background:var(--accent);border-radius:3px;width:0%;pointer-events:none}
+.td-time-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem;color:var(--text-muted)}
+.td-skip{background:none;border:none;color:var(--text-dim);cursor:pointer;padding:8px;display:flex;align-items:center;transition:color .2s;-webkit-tap-highlight-color:transparent}
+.td-skip:active{color:var(--accent)}
+.td-body{padding:3rem 2rem 6rem;max-width:700px}
+.td-section-label{font-family:var(--mono);font-size:.55rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.25rem}
+.td-description{font-size:1.05rem;font-weight:300;color:var(--text-dim);line-height:1.85;margin-bottom:3rem}
+.td-credits{margin-bottom:3rem}
+.td-credit-row{display:flex;gap:2rem;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.td-credit-role{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);width:100px;flex-shrink:0}
+.td-credit-name{font-size:.9rem;font-weight:300;color:var(--text-dim)}
+.td-nav-tracks{display:flex;justify-content:space-between;gap:1rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.05)}
+.td-nav-btn{background:none;border:none;cursor:pointer;color:var(--text-dim);transition:color .3s;text-align:left;padding:8px 4px;-webkit-tap-highlight-color:transparent}
+.td-nav-btn:active{color:var(--accent)}
+.td-nav-btn.next{text-align:right}
+.td-nav-label{font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.25rem}
+.td-nav-title{font-family:var(--serif);font-size:1rem}
+/* NOW PLAYING */
+.now-playing{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(16,16,18,.96);backdrop-filter:blur(24px);border-top:1px solid rgba(200,168,124,.1);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.now-playing.visible{transform:translateY(0)}
+.np-progress-bar{width:100%;height:3px;background:rgba(255,255,255,.06);cursor:pointer;flex-shrink:0}
+.np-progress-fill{height:100%;background:var(--accent);width:0%}
+.np-content{display:flex;align-items:center;gap:.75rem;padding:.65rem 1.5rem}
+.np-controls{display:flex;align-items:center;gap:.25rem}
+.np-btn{background:none;border:none;color:var(--text-dim);cursor:pointer;padding:6px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent}
+.np-btn:active{color:var(--text)}
+.np-btn-play{color:var(--bg);background:var(--accent);width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+.np-btn-play:active{opacity:.8}
+.np-info{flex:1;min-width:0;cursor:pointer;padding:4px 0;-webkit-tap-highlight-color:transparent}
+.np-title{font-family:var(--sans);font-size:.8rem;font-weight:400;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np-album-label{font-family:var(--mono);font-size:.55rem;color:var(--text-muted);letter-spacing:.1em}
+.np-time{font-family:var(--mono);font-size:.6rem;color:var(--text-muted);white-space:nowrap}
+.np-indicator{display:flex;align-items:flex-end;gap:2px;height:14px}
+.np-bar-eq{width:2px;background:var(--accent);border-radius:1px;height:30%}
+.np-bar-eq.animating{animation:eqBar .8s ease-in-out infinite alternate}
+.np-bar-eq:nth-child(1){animation-delay:0s}.np-bar-eq:nth-child(2){animation-delay:.2s}.np-bar-eq:nth-child(3){animation-delay:.4s}.np-bar-eq:nth-child(4){animation-delay:.1s}
+.np-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1.1rem;padding:6px;-webkit-tap-highlight-color:transparent}
+.np-close:active{color:var(--text)}
+.about-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;max-width:1100px;margin:0 auto;align-items:center}
+.about-portrait{aspect-ratio:3/4;border-radius:4px;background:linear-gradient(160deg,hsl(25,20%,14%) 0%,hsl(210,15%,8%) 100%);position:relative;overflow:hidden}
+.about-portrait-grain{position:absolute;inset:0;opacity:.15;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+.about-portrait-label{position:absolute;bottom:1.5rem;left:1.5rem;font-family:var(--mono);font-size:.55rem;font-weight:300;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);opacity:.7}
+.about-text h2{font-family:var(--serif);font-size:2.4rem;font-weight:400;letter-spacing:-.02em;margin-bottom:.5rem;line-height:1.2}
+.about-text h2 em{font-style:italic;color:var(--accent)}
+.about-tagline{font-family:var(--mono);font-size:.65rem;font-weight:300;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2rem}
+.about-body{font-size:1rem;font-weight:300;color:var(--text-dim);line-height:1.85;margin-bottom:1.25rem}
+.about-stats{display:flex;gap:3rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.05)}
+.stat-num{font-family:var(--serif);font-size:2rem;color:var(--accent);line-height:1}
+.stat-label{font-family:var(--mono);font-size:.55rem;font-weight:300;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-top:.35rem}
+.contact-section{background:var(--bg-elevated)}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;max-width:1000px;margin:0 auto}
+.contact-info{display:flex;flex-direction:column;justify-content:center}
+.contact-item{margin-bottom:2rem}
+.contact-item-label{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem}
+.contact-item-value{font-size:1rem;font-weight:300;color:var(--text-dim)}
+.contact-form{display:flex;flex-direction:column;gap:1.5rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-group label{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.form-group input,.form-group textarea{font-family:var(--sans);font-size:16px;font-weight:300;color:var(--text);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:.85rem 1rem;border-radius:2px;outline:none;transition:border-color .3s}
+.form-group input:focus,.form-group textarea:focus{border-color:rgba(200,168,124,.3)}
+.form-group textarea{resize:vertical;min-height:120px}
+.submit-btn{font-family:var(--mono);font-size:.65rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--accent);border:none;padding:1rem 2rem;cursor:pointer;border-radius:2px;align-self:flex-start;-webkit-tap-highlight-color:transparent}
+.submit-btn:active{opacity:.85}
+footer{padding:4rem 3rem 3rem;text-align:center;border-top:1px solid rgba(255,255,255,.04)}
+.footer-logo{font-family:var(--serif);font-size:1.1rem;font-weight:700;margin-bottom:.5rem;color:var(--text)}.footer-logo span{color:var(--accent)}
+.footer-artist{font-family:var(--mono);font-size:.6rem;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem}
+.footer-copy{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.15em;color:var(--text-muted)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollPulse{0%{top:-100%}100%{top:100%}}
+@keyframes eqBar{0%{height:20%}100%{height:90%}}
+@media(max-width:900px){nav{padding:1.25rem 1.5rem}.nav-links{display:none}.hamburger{display:flex}section{padding:5rem 1.5rem}.gallery-grid{columns:2}.album-layout,.about-layout,.contact-layout{grid-template-columns:1fr;gap:3rem}.album-art-wrapper{position:static}.album-art{max-width:400px}.np-content{padding:.65rem 1rem}}
+@media(max-width:550px){.gallery-grid{columns:1;max-width:400px}.about-stats{gap:2rem}.np-time{display:none}.td-credit-row{flex-direction:column;gap:.25rem}.td-credit-role{width:auto}}
+</style>
+</head>
+<body>
+<div class="site-grain"></div>
+<audio id="ap" preload="auto"></audio>
+
+<nav id="mainNav"><a href="#home" class="logo">mage aurian<span>.</span></a><ul class="nav-links"><a href="#home" class="active">home</a><a href="#music">music</a><a href="#gallery">gallery</a><a href="#about">about</a><a href="#contact">contact</a></ul><button class="hamburger" id="hb"><span></span><span></span><span></span></button></nav>
+<div class="mobile-menu" id="mm"><a href="#home">home</a><a href="#music">music</a><a href="#gallery">gallery</a><a href="#about">about</a><a href="#contact">contact</a></div>
+
+<!-- HERO -->
+<section id="home" class="hero"><div class="hero-bg" id="heroBg"></div><div class="hero-line hero-line-top"></div><div class="hero-content"><p class="hero-tag">Photographer &amp; Musician</p><h1>Capturing <em>fragments</em><br>of the in&#8209;between</h1><p class="hero-sub">Through lens and sound, finding meaning in the quiet moments most people overlook.</p><a href="#music" class="hero-cta">Listen Now <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2V10M6 10L2 6M6 10L10 6" stroke="currentColor" stroke-width="1.2"/></svg></a></div><div class="hero-scroll-hint"><div class="scroll-line"></div></div><div class="hero-line hero-line-bot"></div></section>
+
+<!-- MUSIC (now first) -->
+<section id="music" class="album-section"><div class="section-label">01 — Music</div><div class="section-title">Latest <em>Release</em></div><div class="section-desc">Where photography captures a single frame, music captures the feeling of everything around it.</div><div class="divider"></div><div class="album-layout"><div class="album-art-wrapper"><div class="album-art"><div class="album-art-grain"></div><div class="album-art-text"><h3>Fragments:<br>Moments in Between</h3><p>Mage Aurian · 12 Tracks · 2026</p></div></div></div><div class="album-info"><h2>Fragments: <em>Moments&nbsp;in&nbsp;Between</em></h2><div class="album-meta">Mage Aurian · 12 Tracks · 49:22</div><p class="album-desc">An exploration of the spaces between photographs — the sounds you hear when the shutter closes and the world continues without you.</p><div class="tracklist" id="tl"></div><div class="streaming-links"><a class="stream-btn" href="#">Spotify</a><a class="stream-btn" href="#">Apple Music</a><a class="stream-btn" href="#">Bandcamp</a><a class="stream-btn" href="#">SoundCloud</a></div></div></div></section>
+
+<!-- GALLERY (now second) -->
+<section id="gallery"><div class="section-label">02 — Gallery</div><div class="section-title">Selected <em>Works</em></div><div class="section-desc">A curated collection of moments — light, shadow, and everything that exists in the spaces between.</div><div class="divider"></div><div class="gallery-grid" id="gg"></div></section>
+
+<!-- ABOUT -->
+<section id="about"><div class="section-label">03 — About</div><div class="section-title">The <em>Artist</em></div><div class="section-desc">The story behind the lens and the sound.</div><div class="divider"></div><div class="about-layout"><div class="about-portrait"><div class="about-portrait-grain"></div><div class="about-portrait-label">Self Portrait — 2025</div></div><div class="about-text"><h2>Between <em>shutter</em><br>and <em>silence</em></h2><div class="about-tagline">Photographer · Musician · Visual Storyteller</div><p class="about-body">I've always been drawn to the in-between — the moment after the crowd disperses, the light just before it fades, the note that hangs in the air a beat too long.</p><p class="about-body">Photography and music aren't separate pursuits for me; they're two halves of the same impulse — an attempt to hold onto something that's already slipping away.</p><div class="about-stats"><div><div class="stat-num">12</div><div class="stat-label">Tracks</div></div><div><div class="stat-num">200+</div><div class="stat-label">Photos</div></div><div><div class="stat-num">1</div><div class="stat-label">Album</div></div></div></div></div></section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section"><div class="section-label">04 — Contact</div><div class="section-title">Get in <em>Touch</em></div><div class="section-desc">Interested in collaborating, licensing work, or just saying hello?</div><div class="divider"></div><div class="contact-layout"><div class="contact-info"><div class="contact-item"><div class="contact-item-label">Email</div><div class="contact-item-value">hello@mageaurian.com</div></div><div class="contact-item"><div class="contact-item-label">Based In</div><div class="contact-item-value">Your City, Earth</div></div><div class="contact-item"><div class="contact-item-label">Social</div><div class="contact-item-value">@mageaurian</div></div></div><form class="contact-form" onsubmit="event.preventDefault();this.reset();alert('Message sent!')"><div class="form-group"><label>Name</label><input type="text" required></div><div class="form-group"><label>Email</label><input type="email" required></div><div class="form-group"><label>Message</label><textarea required></textarea></div><button type="submit" class="submit-btn">Send Message</button></form></div></section>
+
+<footer><div class="footer-logo">mage aurian<span>.</span></div><div class="footer-artist">Fragments: Moments in Between</div><div class="footer-copy">&copy; 2026 — All rights reserved</div></footer>
+
+<!-- TRACK DETAIL -->
+<div class="track-detail" id="td">
+<div class="td-top-bar"><button class="td-back" id="tdB" ontouchend="closeD()" onclick="closeD()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.2"/></svg> Back</button><button class="td-close" id="tdX" ontouchend="closeD()" onclick="closeD()">&times;</button></div>
+<div class="td-hero"><div class="td-hero-bg" id="tdBg"></div><div class="td-hero-content"><div class="td-track-num" id="tdN"></div><h1 class="td-track-title" id="tdT"></h1><div class="td-track-meta" id="tdM"></div><div class="td-player"><div class="td-player-controls"><button class="td-play-btn" id="tdP"><svg width="20" height="20" viewBox="0 0 14 14" fill="none" id="tdI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><div class="td-progress-wrap"><div class="td-progress" id="tdPr"><div class="td-progress-fill" id="tdPF"></div></div><div class="td-time-row"><span id="tdC">0:00</span><span id="tdD">0:00</span></div></div><button class="td-skip" id="tdPv"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="td-skip" id="tdNx"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button></div></div></div></div>
+<div class="td-body"><div class="td-section-label">About This Track</div><p class="td-description" id="tdDs"></p><div class="td-section-label">Credits</div><div class="td-credits" id="tdCr"></div><div class="td-nav-tracks" id="tdNv"></div></div>
+</div>
+
+<!-- NOW PLAYING -->
+<div class="now-playing" id="np"><div class="np-progress-bar" id="npB"><div class="np-progress-fill" id="npF"></div></div><div class="np-content"><div class="np-controls"><button class="np-btn" id="npP"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="np-btn-play" id="npPl"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" id="npI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><button class="np-btn" id="npN"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button></div><div class="np-indicator"><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div></div><div class="np-info" id="npIn"><div class="np-title" id="npT"></div><div class="np-album-label">Fragments: Moments in Between</div></div><div class="np-time" id="npTm">0:00 / 0:00</div><button class="np-close" id="npC">&times;</button></div></div>
+
+<script>
+var K=[
+{n:"01",t:"I Want Your Love (Not a Love Song)",d:"4:07",f:"audio/I_Want_Your_Love__Not_a_Love_Song_.mp3",g:"Pop Rock · Piano · Vocal",ds:"A slow-burning declaration that blurs the line between desire and devotion. Built on warm piano chords and layered vocals, this opener sets the emotional tone for the entire album.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Pop Rock, Slow, Piano"]]},
+{n:"02",t:"Bloodrage",d:"3:41",f:"audio/Bloodrage.mp3",g:"Dark Pop · Synth · Intense",ds:"A dramatic shift in energy — dark, driving, and relentless. Bloodrage channels raw intensity through pulsing synths and heavy atmosphere, a sonic portrait of the moment restraint gives way to something primal.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Dark Pop, Synth-driven"]]},
+{n:"03",t:"Goodbye, My Friend (Until We Meet Again)",d:"4:47",f:"audio/Goodbye__My_Friend__Until_We_Meet_Again_.mp3",g:"Ballad · A Minor · Emotional",ds:"A deeply emotional farewell ballad in A minor. Tender piano and swelling strings carry a message of love through loss — not an ending, but a pause.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Emotional Ballad, A Minor"]]},
+{n:"04",t:"Shine",d:"4:05",f:"audio/Shine.mp3",g:"Pop Rock · Soft Piano",ds:"Soft piano meets pop rock energy in this uplifting track about finding your own light. Shine builds from a quiet opening into a soaring chorus that feels like the sun breaking through clouds.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Pop Rock, Soft Piano"]]},
+{n:"05",t:"Those Hours",d:"4:38",f:"audio/Those_Hours.mp3",g:"Minimalist · Ambient · Acoustic",ds:"A minimalist ballad with ambient and acoustic textures. Those Hours lives in the space between midnight and dawn — the hours when thoughts are loudest and the world is most still.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Minimalist Ballad, Ambient"]]},
+{n:"06",t:"Finding My Way",d:"4:58",f:"audio/Finding_My_Way.mp3",g:"Pop Rock · Piano · Journey",ds:"Pop rock with piano at its core. It captures the uncertain beauty of navigating life without a map — stumbling forward, course-correcting, and trusting the process.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Pop Rock, Piano"]]},
+{n:"07",t:"What Dreams May Come",d:"3:07",f:"audio/What_Dreams_May_Come.mp3",g:"Cinematic · Orchestral · Soft Pop",ds:"Cinematic and orchestral, this track unfolds like a film score set to song. Sweeping strings and soft pop sensibilities create something both grand and deeply personal.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Cinematic, Orchestral Ballad"]]},
+{n:"08",t:"Wonderful",d:"5:04",f:"audio/Wonderful.mp3",g:"Pop Rock · Piano · Violin",ds:"The longest track and perhaps the emotional centerpiece. Pop rock foundations support piano and violin in a song about recognizing beauty in imperfection.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Pop Rock, Piano, Violin"]]},
+{n:"09",t:"Sunflower Rain",d:"4:09",f:"audio/Sunflower_Rain.mp3",g:"Pop Rock · Piano · Violin",ds:"Warm, golden, and gently propulsive. Piano and violin weave together beneath female vocals — like standing in a field while the weather can't decide between sun and storm.",cr:[["Vocals","Mage Aurian"],["Production","Mage Aurian"],["Style","Pop Rock, Piano, Violin"]]},
+{n:"10",t:"Feeling Like a Star",d:"2:37",f:"audio/Feeling_Like_a_Star.mp3",g:"Upbeat Pop · Drum Solo",ds:"The shortest and most exuberant track — an upbeat pop burst with a drum solo that hits like confetti. Pure joy, distilled into two and a half minutes.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Upbeat Pop, Drum Solo"]]},
+{n:"11",t:"Countless Days",d:"4:07",f:"audio/Countless_Days.mp3",g:"Pop Rock · Full Band",ds:"A rich, full-band arrangement with piano, violin, drums, and bass. Countless Days counts the weight of time and the memories held within it.",cr:[["Vocals","Mage Aurian & Clara Vale"],["Production","Mage Aurian"],["Style","Pop Rock, Country-tinged"]]},
+{n:"12",t:"Craven",d:"4:07",f:"audio/Craven.mp3",g:"Alternative · Symphonic Rock",ds:"The album closer. Alternative and symphonic rock collide in a track about confronting fear — not overcoming it, but staring it down. The fragments reassemble here.",cr:[["Vocals","Mage Aurian"],["Production","Mage Aurian"],["Style","Alternative, Symphonic Rock"]]}
+];
+var PH=[{a:"portrait",h:220,t:"Solitude",c:"Street"},{a:"landscape",h:35,t:"Golden Gate",c:"Urban"},{a:"square",h:180,t:"Reflections",c:"Nature"},{a:"landscape",h:280,t:"Dusk",c:"Landscape"},{a:"portrait",h:15,t:"Warmth",c:"Portrait"},{a:"landscape",h:200,t:"Stillness",c:"Nature"},{a:"square",h:330,t:"Neon Dreams",c:"Street"},{a:"portrait",h:45,t:"Amber",c:"Portrait"},{a:"landscape",h:160,t:"Horizon Line",c:"Landscape"}];
+var ci=-1,ip=false,dO=false,au=document.getElementById("ap"),td=document.getElementById("td");
+function fmt(s){if(!s||isNaN(s))return"0:00";return Math.floor(s/60)+":"+Math.floor(s%60).toString().padStart(2,"0")}
+var hs={portrait:420,landscape:260,square:340},gg=document.getElementById("gg");
+PH.forEach(function(p,i){var c=document.createElement("div");c.className="photo-card";c.style.height=hs[p.a]+"px";c.style.background="linear-gradient("+(135+i*20)+"deg,hsl("+p.h+",30%,15%),hsl("+((p.h+30)%360)+",25%,8%))";c.style.animationDelay=i*.08+"s";c.innerHTML='<div class="photo-grain"></div><div class="photo-overlay"><span class="photo-category">'+p.c+'</span><span class="photo-title">'+p.t+"</span></div>";gg.appendChild(c)});
+var tl=document.getElementById("tl");
+K.forEach(function(t,i){
+  var r=document.createElement("div");r.className="track";
+  r.innerHTML='<div class="track-left"><div class="track-num">'+t.n+'</div><div class="track-title">'+t.t+'</div></div><div class="track-right"><div class="track-dur">'+t.d+'</div><div class="track-arrow">&#8250;</div></div>';
+  function handler(e){e.preventDefault();e.stopPropagation();openD(i);}
+  r.addEventListener("click",handler);
+  r.addEventListener("touchend",handler);
+  tl.appendChild(r);
+});
+function play(i){if(i<0||i>=K.length)return;ci=i;au.src=K[i].f;au.load();au.play().then(function(){ip=true;upd()}).catch(function(){ip=false;upd()})}
+function tog(){if(ci<0)return;if(ip){au.pause();ip=false}else{au.play().then(function(){ip=true;upd()}).catch(function(){})}upd()}
+var playSvg='<path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/>';
+var pauseSvg='<rect x="2.5" y="1.5" width="3" height="11" rx=".5" fill="currentColor"/><rect x="8.5" y="1.5" width="3" height="11" rx=".5" fill="currentColor"/>';
+function upd(){
+  document.querySelectorAll(".track").forEach(function(r,i){r.classList.toggle("playing",i===ci)});
+  var np=document.getElementById("np");
+  if(ci>=0){np.classList.add("visible");document.getElementById("npT").textContent=K[ci].t;document.querySelectorAll(".np-bar-eq").forEach(function(b){if(ip)b.classList.add("animating");else{b.classList.remove("animating");b.style.height="30%"}});document.getElementById("npI").innerHTML=ip?pauseSvg:playSvg}
+  else{np.classList.remove("visible")}
+  if(dO)document.getElementById("tdI").innerHTML=ip?pauseSvg:playSvg;
+}
+function openD(i){
+  var t=K[i],h=(i*30+200)%360;
+  document.getElementById("tdBg").style.background="radial-gradient(ellipse 80% 70% at 30% 70%,hsla("+h+",25%,12%,.8),transparent 70%),radial-gradient(ellipse 60% 50% at 80% 30%,hsla("+((h+40)%360)+",20%,8%,.6),transparent 60%),linear-gradient(to bottom,var(--bg),hsl("+h+",15%,6%))";
+  document.getElementById("tdN").textContent=t.n;
+  document.getElementById("tdT").textContent=t.t;
+  document.getElementById("tdM").textContent="Mage Aurian \u00B7 "+t.g+" \u00B7 "+t.d;
+  document.getElementById("tdDs").textContent=t.ds;
+  document.getElementById("tdCr").innerHTML=t.cr.map(function(c){return'<div class="td-credit-row"><div class="td-credit-role">'+c[0]+'</div><div class="td-credit-name">'+c[1]+"</div></div>"}).join("");
+  var nv="";
+  if(i>0)nv+='<button class="td-nav-btn" onclick="openD('+(i-1)+')"><div class="td-nav-label">\u2190 Previous</div><div class="td-nav-title">'+K[i-1].t+"</div></button>";else nv+="<div></div>";
+  if(i<K.length-1)nv+='<button class="td-nav-btn next" onclick="openD('+(i+1)+')"><div class="td-nav-label">Next \u2192</div><div class="td-nav-title">'+K[i+1].t+"</div></button>";else nv+="<div></div>";
+  document.getElementById("tdNv").innerHTML=nv;
+  if(ci!==i)play(i);
+  td.scrollTop=0;td.classList.add("open");dO=true;document.body.style.overflow="hidden";upd();
+}
+function closeD(){td.classList.remove("open");dO=false;document.body.style.overflow=""}
+document.getElementById("tdP").addEventListener("click",tog);
+document.getElementById("tdP").addEventListener("touchend",function(e){e.preventDefault();tog()});
+document.getElementById("tdPv").addEventListener("click",function(){if(ci>0){play(ci-1);if(dO)openD(ci)}});
+document.getElementById("tdNx").addEventListener("click",function(){if(ci<K.length-1){play(ci+1);if(dO)openD(ci)}});
+document.getElementById("tdPr").addEventListener("click",function(e){if(!au.duration)return;var r=e.currentTarget.getBoundingClientRect();au.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*au.duration});
+document.getElementById("tdPr").addEventListener("touchend",function(e){if(!au.duration||!e.changedTouches[0])return;var r=e.currentTarget.getBoundingClientRect();au.currentTime=Math.max(0,Math.min(1,(e.changedTouches[0].clientX-r.left)/r.width))*au.duration});
+au.addEventListener("timeupdate",function(){var p=au.duration?(au.currentTime/au.duration*100):0;document.getElementById("npF").style.width=p+"%";document.getElementById("npTm").textContent=fmt(au.currentTime)+" / "+fmt(au.duration);if(dO){document.getElementById("tdPF").style.width=p+"%";document.getElementById("tdC").textContent=fmt(au.currentTime);document.getElementById("tdD").textContent=fmt(au.duration)}});
+au.addEventListener("ended",function(){if(ci<K.length-1){play(ci+1);if(dO)openD(ci)}else{ip=false;ci=-1;upd()}});
+document.getElementById("npPl").addEventListener("click",tog);
+document.getElementById("npPl").addEventListener("touchend",function(e){e.preventDefault();tog()});
+document.getElementById("npP").addEventListener("click",function(){if(ci>0)play(ci-1)});
+document.getElementById("npN").addEventListener("click",function(){if(ci<K.length-1)play(ci+1)});
+document.getElementById("npC").addEventListener("click",function(){au.pause();ip=false;ci=-1;upd()});
+document.getElementById("npB").addEventListener("click",function(e){if(!au.duration)return;var r=e.currentTarget.getBoundingClientRect();au.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*au.duration});
+document.getElementById("npIn").addEventListener("click",function(){if(ci>=0)openD(ci)});
+document.getElementById("npIn").addEventListener("touchend",function(e){e.preventDefault();if(ci>=0)openD(ci)});
+var hb=document.getElementById("hb"),mm=document.getElementById("mm");
+hb.addEventListener("click",function(){hb.classList.toggle("open");mm.classList.toggle("open")});
+mm.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){hb.classList.remove("open");mm.classList.remove("open")})});
+window.addEventListener("scroll",function(){document.getElementById("mainNav").classList.toggle("scrolled",window.scrollY>60);var bg=document.getElementById("heroBg");if(bg)bg.style.transform="translateY("+window.scrollY*.2+"px)";["home","music","gallery","about","contact"].forEach(function(id){var el=document.getElementById(id);if(!el)return;var r=el.getBoundingClientRect();if(r.top<window.innerHeight*.5&&r.bottom>window.innerHeight*.3)document.querySelectorAll(".nav-links a").forEach(function(a){a.classList.toggle("active",a.getAttribute("href")==="#"+id)})})},{passive:true});
+</script>
+</body>
+</html>
