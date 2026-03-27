@@ -43,9 +43,11 @@ section{padding:8rem 3rem;position:relative}
 .section-title em{font-style:italic;color:var(--accent)}
 .section-desc{font-size:1rem;font-weight:300;color:var(--text-dim);max-width:560px;line-height:1.75;margin-bottom:4rem}
 .divider{width:60px;height:1px;background:rgba(200,168,124,.25);margin:0 0 4rem}
-.gallery-grid{columns:3;column-gap:1.25rem;max-width:1200px;margin:0 auto}
-.photo-card{break-inside:avoid;margin-bottom:1.25rem;border-radius:4px;overflow:hidden;position:relative;cursor:pointer;animation:fadeUp .6s ease both}
+.gallery-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.photo-card{border-radius:4px;overflow:hidden;position:relative;cursor:pointer;animation:fadeUp .6s ease both;aspect-ratio:3/2}
 .photo-grain{display:none}
+.photo-card img{width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;transition:transform .4s}
+.photo-card:hover img{transform:scale(1.03)}
 .photo-overlay{position:absolute;bottom:0;left:0;right:0;padding:2rem 1.25rem 1.25rem;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);display:flex;flex-direction:column;gap:.25rem;opacity:0;transition:opacity .4s}
 .photo-card:hover .photo-overlay{opacity:1}
 .photo-category{font-family:var(--mono);font-size:.55rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
@@ -162,11 +164,24 @@ footer{padding:4rem 3rem 3rem;text-align:center;border-top:1px solid rgba(255,25
 .footer-logo{font-family:var(--serif);font-size:1.1rem;font-weight:700;margin-bottom:.5rem;color:var(--text)}.footer-logo span{color:var(--accent)}
 .footer-artist{font-family:var(--mono);font-size:.6rem;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem}
 .footer-copy{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.15em;color:var(--text-muted)}
+
+.lightbox{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.95);display:none;flex-direction:column;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(20px);-webkit-overflow-scrolling:touch;overflow-y:auto}
+.lightbox.open{display:flex}
+.lb-close{position:fixed;top:1rem;right:1.5rem;z-index:310;background:none;border:1px solid rgba(255,255,255,.15);color:var(--text);cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all .3s;touch-action:manipulation}
+.lb-close:active{background:rgba(200,168,124,.2);color:var(--accent)}
+.lb-img{max-width:100%;max-height:70vh;object-fit:contain;border-radius:4px;margin-bottom:1.5rem}
+.lb-title{font-family:var(--serif);font-size:1.5rem;color:var(--text);margin-bottom:.35rem;text-align:center}
+.lb-category{font-family:var(--mono);font-size:.55rem;font-weight:300;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;text-align:center}
+.lb-desc{font-size:.95rem;font-weight:300;color:var(--text-dim);line-height:1.75;max-width:600px;text-align:center;margin-bottom:1rem}
+.lb-nav{display:flex;gap:2rem;margin-top:.5rem}
+.lb-nav-btn{background:none;border:1px solid rgba(255,255,255,.1);color:var(--text-dim);cursor:pointer;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s;touch-action:manipulation}
+.lb-nav-btn:active{background:rgba(200,168,124,.15);color:var(--accent);border-color:rgba(200,168,124,.3)}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 @keyframes scrollPulse{0%{top:-100%}100%{top:100%}}
 @keyframes eqBar{0%{height:20%}100%{height:90%}}
-@media(max-width:900px){nav{padding:1.25rem 1.5rem}.nav-links{display:none}.hamburger{display:flex}section{padding:5rem 1.5rem}.gallery-grid{columns:2}.album-layout,.about-layout,.contact-layout{grid-template-columns:1fr;gap:3rem}.album-art-wrapper{position:static}.album-art{max-width:400px}.np-content{padding:.65rem 1rem}}
-@media(max-width:550px){.gallery-grid{columns:1;max-width:400px}.about-stats{gap:2rem}.np-time{display:none}.td-credit-row{flex-direction:column;gap:.25rem}.td-credit-role{width:auto}}
+@media(max-width:900px){nav{padding:1.25rem 1.5rem}.nav-links{display:none}.hamburger{display:flex}section{padding:5rem 1.5rem}.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}.album-layout,.about-layout,.contact-layout{grid-template-columns:1fr;gap:3rem}.album-art-wrapper{position:static}.album-art{max-width:400px}.np-content{padding:.65rem 1rem}}
+@media(max-width:550px){.gallery-grid{grid-template-columns:1fr}.about-stats{gap:2rem}.np-time{display:none}.td-credit-row{flex-direction:column;gap:.25rem}.td-credit-role{width:auto}}
 </style>
 </head>
 <body>
@@ -186,6 +201,18 @@ footer{padding:4rem 3rem 3rem;text-align:center;border-top:1px solid rgba(255,25
 <div class="td-body"><div class="td-section-label">Lyrics</div><div class="td-lyrics" id="tdLy"></div><div class="td-section-label">Credits</div><div class="td-credits" id="tdCr"></div><div class="td-nav-tracks" id="tdNv"></div></div>
 </div>
 <div class="now-playing" id="np"><div class="np-progress-bar" id="npB"><div class="np-progress-fill" id="npF"></div></div><div class="np-content"><div class="np-controls"><button class="np-btn" id="npP"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="np-btn-play" id="npPl"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" id="npI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><button class="np-btn" id="npN"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button></div><div class="np-indicator"><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div></div><div class="np-info" id="npIn"><div class="np-title" id="npT"></div><div class="np-album-label">Fragments: Moments in Between</div></div><div class="np-time" id="npTm">0:00 / 0:00</div><button class="np-close" id="npC">&times;</button></div></div>
+
+<div class="lightbox" id="lb">
+<button class="lb-close" id="lbClose">&times;</button>
+<img class="lb-img" id="lbImg" src="" alt="">
+<div class="lb-title" id="lbTitle"></div>
+<div class="lb-category" id="lbCat"></div>
+<div class="lb-desc" id="lbDesc"></div>
+<div class="lb-nav">
+<button class="lb-nav-btn" id="lbPrev"><svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<button class="lb-nav-btn" id="lbNext"><svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="1.5"/></svg></button>
+</div>
+</div>
 <script>
 
 var K=[
@@ -225,7 +252,7 @@ var PH=[
 var ci=-1,ip=false,dO=false,au=document.getElementById("ap"),td=document.getElementById("td");
 function fmt(s){if(!s||isNaN(s))return"0:00";return Math.floor(s/60)+":"+Math.floor(s%60).toString().padStart(2,"0")}
 var gg=document.getElementById("gg");
-PH.forEach(function(p,i){var c=document.createElement("div");c.className="photo-card";c.style.animationDelay=i*.06+"s";c.innerHTML='<img src="'+p.f+'" alt="'+p.t+'" loading="lazy" style="width:100%;display:block;border-radius:4px"><div class="photo-overlay"><span class="photo-category">'+p.c+'</span><span class="photo-title">'+p.t+"</span></div>";gg.appendChild(c)});
+PH.forEach(function(p,i){var c=document.createElement("div");c.className="photo-card";c.style.animationDelay=i*.06+"s";c.innerHTML='<img src="'+p.f+'" alt="'+p.t+'" loading="lazy"><div class="photo-overlay"><span class="photo-category">'+p.c+'</span><span class="photo-title">'+p.t+"</span></div>";c.addEventListener("click",function(){openLB(i)});c.addEventListener("touchend",function(e){e.preventDefault();openLB(i)});gg.appendChild(c)});
 var tl=document.getElementById("tl");
 K.forEach(function(t,i){
   var r=document.createElement("div");r.className="track";
@@ -294,6 +321,18 @@ document.getElementById("npB").addEventListener("click",function(e){if(!au.durat
 // Tapping the now-playing info area opens the detail page
 document.getElementById("npIn").addEventListener("click",function(){if(ci>=0)openD(ci)});
 document.getElementById("npIn").addEventListener("touchend",function(e){e.preventDefault();if(ci>=0)openD(ci)});
+
+var lbIdx=-1;
+function openLB(i){lbIdx=i;var p=PH[i];document.getElementById("lbImg").src=p.f;document.getElementById("lbImg").alt=p.t;document.getElementById("lbTitle").textContent=p.t;document.getElementById("lbCat").textContent=p.c;document.getElementById("lbDesc").textContent=p.ds||"";document.getElementById("lb").classList.add("open");document.body.style.overflow="hidden"}
+function closeLB(){document.getElementById("lb").classList.remove("open");document.body.style.overflow="";lbIdx=-1}
+document.getElementById("lbClose").addEventListener("click",closeLB);
+document.getElementById("lbClose").addEventListener("touchend",function(e){e.preventDefault();closeLB()});
+document.getElementById("lbPrev").addEventListener("click",function(){if(lbIdx>0)openLB(lbIdx-1)});
+document.getElementById("lbPrev").addEventListener("touchend",function(e){e.preventDefault();if(lbIdx>0)openLB(lbIdx-1)});
+document.getElementById("lbNext").addEventListener("click",function(){if(lbIdx<PH.length-1)openLB(lbIdx+1)});
+document.getElementById("lbNext").addEventListener("touchend",function(e){e.preventDefault();if(lbIdx<PH.length-1)openLB(lbIdx+1)});
+document.getElementById("lb").addEventListener("click",function(e){if(e.target===this)closeLB()});
+
 var hb=document.getElementById("hb"),mm=document.getElementById("mm");
 hb.addEventListener("click",function(){hb.classList.toggle("open");mm.classList.toggle("open")});
 mm.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){hb.classList.remove("open");mm.classList.remove("open")})});
