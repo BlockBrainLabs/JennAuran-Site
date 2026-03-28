@@ -129,7 +129,7 @@ section{padding:8rem 3rem;position:relative}
 .np-title{font-family:var(--sans);font-size:.8rem;font-weight:400;color:var(--text);overflow:hidden;position:relative;white-space:nowrap}
 .np-title-inner{display:inline-block;white-space:nowrap;padding-right:3rem}
 .np-title-inner.scrolling{animation:marquee var(--marquee-dur,10s) linear infinite}
-@keyframes marquee{0%,20%{transform:translateX(0)}80%,100%{transform:translateX(var(--marquee-dist,-100%))}}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(var(--marquee-dist,-100%))}}
 .np-album-label{font-family:var(--mono);font-size:.55rem;color:var(--text-muted);letter-spacing:.1em}
 .np-time{font-family:var(--mono);font-size:.6rem;color:var(--text-muted);white-space:nowrap}
 .np-indicator{display:flex;align-items:flex-end;gap:2px;height:14px}
