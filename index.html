@@ -101,6 +101,13 @@ section{padding:8rem 3rem;position:relative}
 .td-time-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem;color:var(--text-muted)}
 .td-skip{background:none;border:none;color:var(--text-dim);cursor:pointer;padding:8px;display:flex;align-items:center;touch-action:manipulation}
 .td-skip:active{color:var(--accent)}
+
+.td-tabs{display:flex;gap:0;margin-bottom:2rem}
+.td-tab{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--text-muted);background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:.75rem 1.5rem;cursor:pointer;transition:all .3s;touch-action:manipulation;flex:1;text-align:center}
+.td-tab.active{color:var(--accent);border-bottom:1px solid var(--accent)}
+.td-tab:not(.active):hover{color:var(--text-dim)}
+.td-tab-content{display:none}
+.td-tab-content.active{display:block}
 .td-body{padding:3rem 2rem 6rem;max-width:700px}
 .td-section-label{font-family:var(--mono);font-size:.55rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.25rem}
 .td-lyrics{font-size:.95rem;font-weight:300;color:var(--text-dim);line-height:1.85;white-space:pre-line;margin-bottom:3rem}
@@ -207,7 +214,7 @@ footer{padding:4rem 3rem 3rem;text-align:center;border-top:1px solid rgba(255,25
 <div class="track-detail" id="td">
 <div class="td-top-bar"><button class="td-back" id="tdB"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.2"/></svg> Back</button><button class="td-close" id="tdX">&times;</button></div>
 <div class="td-hero"><div class="td-hero-bg" id="tdBg"></div><div class="td-hero-content"><div class="td-track-num" id="tdN"></div><h1 class="td-track-title" id="tdT"></h1><div class="td-track-meta" id="tdM"></div><div class="td-player"><div class="td-player-controls"><button class="td-play-btn" id="tdP"><svg width="20" height="20" viewBox="0 0 14 14" fill="none" id="tdI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><div class="td-progress-wrap"><div class="td-progress" id="tdPr"><div class="td-progress-fill" id="tdPF"></div></div><div class="td-time-row"><span id="tdC">0:00</span><span id="tdD">0:00</span></div></div><button class="td-skip" id="tdPv"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="td-skip" id="tdNx"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="td-skip td-repeat" id="tdR" title="Repeat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="rp-dot"></span><span class="rp-one">1</span></button></div></div></div></div>
-<div class="td-body"><div id="tdSdWrap" style="display:none"><div class="td-section-label">About This Track</div><div class="td-description" id="tdSd" style="font-size:.95rem;font-weight:300;color:var(--text-dim);line-height:1.85;white-space:pre-line;margin-bottom:3rem"></div></div><div class="td-section-label">Lyrics</div><div class="td-lyrics" id="tdLy"></div><div class="td-section-label">Credits</div><div class="td-credits" id="tdCr"></div><div class="td-nav-tracks" id="tdNv"></div></div>
+<div class="td-body"><div class="td-tabs" id="tdTabs"><button class="td-tab active" id="tdTabLy" onclick="switchTab('lyrics')">Lyrics</button><button class="td-tab" id="tdTabAb" onclick="switchTab('about')" style="display:none">About</button></div><div class="td-tab-content active" id="tdLyWrap"><div class="td-lyrics" id="tdLy"></div></div><div class="td-tab-content" id="tdSdWrap"><div class="td-description" id="tdSd" style="font-size:.95rem;font-weight:300;color:var(--text-dim);line-height:1.85;white-space:pre-line"></div></div><div class="td-section-label">Credits</div><div class="td-credits" id="tdCr"></div><div class="td-nav-tracks" id="tdNv"></div></div>
 </div>
 <div class="now-playing" id="np"><div class="np-progress-bar" id="npB"><div class="np-progress-fill" id="npF"></div></div><div class="np-content"><div class="np-controls"><button class="np-btn" id="npP"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="np-btn-play" id="npPl"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" id="npI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><button class="np-btn" id="npN"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="np-btn np-repeat" id="npR" title="Repeat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="rp-dot"></span><span class="rp-one">1</span></button></div><div class="np-indicator"><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div></div><div class="np-info" id="npIn"><div class="np-title" id="npT"></div><div class="np-album-label">Fragments: Moments in Between</div></div><div class="np-time" id="npTm">0:00 / 0:00</div><button class="np-close" id="npC">&times;</button></div></div>
 
@@ -300,13 +307,20 @@ function updRepeatBtns(){
 var btns=document.querySelectorAll(".np-repeat,.td-repeat");
 btns.forEach(function(b){b.classList.remove("active","one");if(rpMode===1){b.classList.add("active")}else if(rpMode===2){b.classList.add("active","one")}});
 }
+
+function switchTab(t){
+var lyTab=document.getElementById("tdTabLy"),abTab=document.getElementById("tdTabAb");
+var lyWrap=document.getElementById("tdLyWrap"),sdWrap=document.getElementById("tdSdWrap");
+if(t==="about"){lyTab.classList.remove("active");abTab.classList.add("active");lyWrap.classList.remove("active");sdWrap.classList.add("active")}
+else{lyTab.classList.add("active");abTab.classList.remove("active");lyWrap.classList.add("active");sdWrap.classList.remove("active")}
+}
 function openD(i){
   var t=K[i],h=(i*30+200)%360;
   document.getElementById("tdBg").style.background="radial-gradient(ellipse 80% 70% at 30% 70%,hsla("+h+",25%,12%,.8),transparent 70%),radial-gradient(ellipse 60% 50% at 80% 30%,hsla("+((h+40)%360)+",20%,8%,.6),transparent 60%),linear-gradient(to bottom,var(--bg),hsl("+h+",15%,6%))";
   document.getElementById("tdN").textContent=t.n;
   document.getElementById("tdT").textContent=t.t;
   document.getElementById("tdM").textContent=t.g+" \u00B7 "+t.d;
-  document.getElementById("tdLy").textContent=t.ly;if(t.sd){document.getElementById("tdSd").textContent=t.sd;document.getElementById("tdSdWrap").style.display="block"}else{document.getElementById("tdSdWrap").style.display="none"}
+  document.getElementById("tdLy").textContent=t.ly;if(t.sd){document.getElementById("tdSd").textContent=t.sd;document.getElementById("tdTabAb").style.display=""}else{document.getElementById("tdTabAb").style.display="none"}switchTab("lyrics")
   document.getElementById("tdCr").innerHTML=t.cr.map(function(c){return'<div class="td-credit-row"><div class="td-credit-role">'+c[0]+'</div><div class="td-credit-name">'+c[1]+"</div></div>"}).join("");
   var nv="";
   if(i>0)nv+='<button class="td-nav-btn" onclick="openD('+(i-1)+')"><div class="td-nav-label">\u2190 Previous</div><div class="td-nav-title">'+K[i-1].t+"</div></button>";else nv+="<div></div>";
