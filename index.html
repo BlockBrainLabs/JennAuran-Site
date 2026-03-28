@@ -133,6 +133,13 @@ section{padding:8rem 3rem;position:relative}
 .np-bar-eq{width:2px;background:var(--accent);border-radius:1px;height:30%}
 .np-bar-eq.animating{animation:eqBar .8s ease-in-out infinite alternate}
 .np-bar-eq:nth-child(1){animation-delay:0s}.np-bar-eq:nth-child(2){animation-delay:.2s}.np-bar-eq:nth-child(3){animation-delay:.4s}.np-bar-eq:nth-child(4){animation-delay:.1s}
+
+.np-repeat,.td-repeat{background:none;border:none;color:var(--text-muted);cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;transition:color .2s;touch-action:manipulation;position:relative}
+.np-repeat.active,.td-repeat.active{color:var(--accent)}
+.np-repeat .rp-dot,.td-repeat .rp-dot{display:none;position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--accent)}
+.np-repeat.active .rp-dot,.td-repeat.active .rp-dot{display:block}
+.rp-one{display:none;font-size:.45rem;font-weight:700;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--accent)}
+.np-repeat.one .rp-one,.td-repeat.one .rp-one{display:block}
 .np-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1.1rem;padding:6px;touch-action:manipulation}
 .np-close:active{color:var(--text)}
 .about-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;max-width:1100px;margin:0 auto;align-items:center}
@@ -197,10 +204,10 @@ footer{padding:4rem 3rem 3rem;text-align:center;border-top:1px solid rgba(255,25
 <footer><div class="footer-logo">fragments<span>.</span></div><div class="footer-artist">Fragments: Moments in Between</div><div class="footer-copy">&copy; 2026 — All rights reserved</div></footer>
 <div class="track-detail" id="td">
 <div class="td-top-bar"><button class="td-back" id="tdB"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.2"/></svg> Back</button><button class="td-close" id="tdX">&times;</button></div>
-<div class="td-hero"><div class="td-hero-bg" id="tdBg"></div><div class="td-hero-content"><div class="td-track-num" id="tdN"></div><h1 class="td-track-title" id="tdT"></h1><div class="td-track-meta" id="tdM"></div><div class="td-player"><div class="td-player-controls"><button class="td-play-btn" id="tdP"><svg width="20" height="20" viewBox="0 0 14 14" fill="none" id="tdI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><div class="td-progress-wrap"><div class="td-progress" id="tdPr"><div class="td-progress-fill" id="tdPF"></div></div><div class="td-time-row"><span id="tdC">0:00</span><span id="tdD">0:00</span></div></div><button class="td-skip" id="tdPv"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="td-skip" id="tdNx"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button></div></div></div></div>
+<div class="td-hero"><div class="td-hero-bg" id="tdBg"></div><div class="td-hero-content"><div class="td-track-num" id="tdN"></div><h1 class="td-track-title" id="tdT"></h1><div class="td-track-meta" id="tdM"></div><div class="td-player"><div class="td-player-controls"><button class="td-play-btn" id="tdP"><svg width="20" height="20" viewBox="0 0 14 14" fill="none" id="tdI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><div class="td-progress-wrap"><div class="td-progress" id="tdPr"><div class="td-progress-fill" id="tdPF"></div></div><div class="td-time-row"><span id="tdC">0:00</span><span id="tdD">0:00</span></div></div><button class="td-skip" id="tdPv"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="td-skip" id="tdNx"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="td-skip td-repeat" id="tdR" title="Repeat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="rp-dot"></span><span class="rp-one">1</span></button></div></div></div></div>
 <div class="td-body"><div class="td-section-label">Lyrics</div><div class="td-lyrics" id="tdLy"></div><div class="td-section-label">Credits</div><div class="td-credits" id="tdCr"></div><div class="td-nav-tracks" id="tdNv"></div></div>
 </div>
-<div class="now-playing" id="np"><div class="np-progress-bar" id="npB"><div class="np-progress-fill" id="npF"></div></div><div class="np-content"><div class="np-controls"><button class="np-btn" id="npP"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="np-btn-play" id="npPl"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" id="npI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><button class="np-btn" id="npN"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button></div><div class="np-indicator"><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div></div><div class="np-info" id="npIn"><div class="np-title" id="npT"></div><div class="np-album-label">Fragments: Moments in Between</div></div><div class="np-time" id="npTm">0:00 / 0:00</div><button class="np-close" id="npC">&times;</button></div></div>
+<div class="now-playing" id="np"><div class="np-progress-bar" id="npB"><div class="np-progress-fill" id="npF"></div></div><div class="np-content"><div class="np-controls"><button class="np-btn" id="npP"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="transform:scaleX(-1)"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="np-btn-play" id="npPl"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" id="npI"><path d="M3 1.5L12 7L3 12.5V1.5Z" fill="currentColor"/></svg></button><button class="np-btn" id="npN"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2.5L10 8L3 13.5V2.5Z" fill="currentColor"/><rect x="11" y="2.5" width="2" height="11" rx=".5" fill="currentColor"/></svg></button><button class="np-btn np-repeat" id="npR" title="Repeat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="rp-dot"></span><span class="rp-one">1</span></button></div><div class="np-indicator"><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div><div class="np-bar-eq"></div></div><div class="np-info" id="npIn"><div class="np-title" id="npT"></div><div class="np-album-label">Fragments: Moments in Between</div></div><div class="np-time" id="npTm">0:00 / 0:00</div><button class="np-close" id="npC">&times;</button></div></div>
 
 <div class="lightbox" id="lb">
 <button class="lb-close" id="lbClose">&times;</button>
@@ -249,7 +256,7 @@ var PH=[
 {f:"images/MACRO0001-WhiteYellowButterfly.jpg",t:"White Yellow Butterfly",c:"Macro",ds:"Delicate wings catching the light \u2014 simplicity and grace in motion."},
 {f:"images/MACRO0004-PinkBlackButterfly.jpg",t:"Pink Swallowtail",c:"Macro",ds:"A swallowtail butterfly with striking pink and black markings, paused on a tropical bloom."}
 ];
-var ci=-1,ip=false,dO=false,au=document.getElementById("ap"),td=document.getElementById("td");
+var ci=-1,ip=false,dO=false,rpMode=0,au=document.getElementById("ap"),td=document.getElementById("td");
 function fmt(s){if(!s||isNaN(s))return"0:00";return Math.floor(s/60)+":"+Math.floor(s%60).toString().padStart(2,"0")}
 var gg=document.getElementById("gg");
 PH.forEach(function(p,i){var c=document.createElement("div");c.className="photo-card";c.style.animationDelay=i*.06+"s";c.innerHTML='<img src="'+p.f+'" alt="'+p.t+'" loading="lazy"><div class="photo-overlay"><span class="photo-category">'+p.c+'</span><span class="photo-title">'+p.t+"</span></div>";var sy2=0;c.addEventListener("touchstart",function(e){sy2=e.touches[0].clientY},{passive:true});c.addEventListener("touchend",function(e){var dy=Math.abs(e.changedTouches[0].clientY-sy2);if(dy<10){e.preventDefault();openLB(i)}});c.addEventListener("click",function(){openLB(i)});gg.appendChild(c)});
@@ -285,6 +292,12 @@ function upd(){
   else{np.classList.remove("visible")}
   if(dO)document.getElementById("tdI").innerHTML=ip?pauseSvg:playSvg;
 }
+
+function cycleRepeat(){rpMode=(rpMode+1)%3;updRepeatBtns()}
+function updRepeatBtns(){
+var btns=document.querySelectorAll(".np-repeat,.td-repeat");
+btns.forEach(function(b){b.classList.remove("active","one");if(rpMode===1){b.classList.add("active")}else if(rpMode===2){b.classList.add("active","one")}});
+}
 function openD(i){
   var t=K[i],h=(i*30+200)%360;
   document.getElementById("tdBg").style.background="radial-gradient(ellipse 80% 70% at 30% 70%,hsla("+h+",25%,12%,.8),transparent 70%),radial-gradient(ellipse 60% 50% at 80% 30%,hsla("+((h+40)%360)+",20%,8%,.6),transparent 60%),linear-gradient(to bottom,var(--bg),hsl("+h+",15%,6%))";
@@ -307,16 +320,16 @@ document.getElementById("tdX").addEventListener("click",closeD);
 document.getElementById("tdX").addEventListener("touchend",function(e){e.preventDefault();closeD()});
 document.getElementById("tdP").addEventListener("click",tog);
 document.getElementById("tdP").addEventListener("touchend",function(e){e.preventDefault();tog()});
-document.getElementById("tdPv").addEventListener("click",function(){if(ci>0){var ni=ci-1;play(ni);if(dO)openD(ni)}});
-document.getElementById("tdNx").addEventListener("click",function(){if(ci<K.length-1){var ni=ci+1;play(ni);if(dO)openD(ni)}});
+document.getElementById("tdPv").addEventListener("click",function(){var ni=ci>0?ci-1:K.length-1;play(ni);if(dO)openD(ni)});
+document.getElementById("tdNx").addEventListener("click",function(){var ni=ci<K.length-1?ci+1:0;play(ni);if(dO)openD(ni)});
 document.getElementById("tdPr").addEventListener("click",function(e){if(!au.duration)return;var r=e.currentTarget.getBoundingClientRect();au.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*au.duration});
 document.getElementById("tdPr").addEventListener("touchend",function(e){if(!au.duration||!e.changedTouches[0])return;var r=e.currentTarget.getBoundingClientRect();au.currentTime=Math.max(0,Math.min(1,(e.changedTouches[0].clientX-r.left)/r.width))*au.duration});
 au.addEventListener("timeupdate",function(){var p=au.duration?(au.currentTime/au.duration*100):0;document.getElementById("npF").style.width=p+"%";document.getElementById("npTm").textContent=fmt(au.currentTime)+" / "+fmt(au.duration);if(dO){document.getElementById("tdPF").style.width=p+"%";document.getElementById("tdC").textContent=fmt(au.currentTime);document.getElementById("tdD").textContent=fmt(au.duration)}});
-au.addEventListener("ended",function(){if(ci<K.length-1){var ni=ci+1;play(ni);if(dO)openD(ni)}else{ip=false;ci=-1;upd()}});
+au.addEventListener("ended",function(){if(rpMode===2){au.currentTime=0;au.play().then(function(){ip=true;upd()}).catch(function(){})}else if(ci<K.length-1){var ni=ci+1;play(ni);if(dO)openD(ni)}else if(rpMode===1){play(0);if(dO)openD(0)}else{ip=false;ci=-1;upd()}});
 document.getElementById("npPl").addEventListener("click",tog);
 document.getElementById("npPl").addEventListener("touchend",function(e){e.preventDefault();tog()});
-document.getElementById("npP").addEventListener("click",function(){if(ci>0){var ni=ci-1;play(ni);if(dO)openD(ni)}});
-document.getElementById("npN").addEventListener("click",function(){if(ci<K.length-1){var ni=ci+1;play(ni);if(dO)openD(ni)}});
+document.getElementById("npP").addEventListener("click",function(){var ni=ci>0?ci-1:K.length-1;play(ni);if(dO)openD(ni)});
+document.getElementById("npN").addEventListener("click",function(){var ni=ci<K.length-1?ci+1:0;play(ni);if(dO)openD(ni)});
 document.getElementById("npC").addEventListener("click",function(){au.pause();ip=false;ci=-1;upd()});
 document.getElementById("npB").addEventListener("click",function(e){if(!au.duration)return;var r=e.currentTarget.getBoundingClientRect();au.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*au.duration});
 // Tapping the now-playing info area opens the detail page
@@ -334,6 +347,11 @@ document.getElementById("lbNext").addEventListener("click",function(){if(lbIdx<P
 document.getElementById("lbNext").addEventListener("touchend",function(e){e.preventDefault();if(lbIdx<PH.length-1)openLB(lbIdx+1)});
 document.getElementById("lb").addEventListener("click",function(e){if(e.target===this)closeLB()});
 
+
+document.getElementById("npR").addEventListener("click",cycleRepeat);
+document.getElementById("npR").addEventListener("touchend",function(e){e.preventDefault();cycleRepeat()});
+document.getElementById("tdR").addEventListener("click",cycleRepeat);
+document.getElementById("tdR").addEventListener("touchend",function(e){e.preventDefault();cycleRepeat()});
 var hb=document.getElementById("hb"),mm=document.getElementById("mm");
 hb.addEventListener("click",function(){hb.classList.toggle("open");mm.classList.toggle("open")});
 mm.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){hb.classList.remove("open");mm.classList.remove("open")})});
