@@ -31,14 +31,31 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
 .vc-title{font-family:var(--serif);font-size:1.25rem;font-weight:400}
 .vc-tag{font-family:var(--mono);font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-left:auto}
 @media(max-width:700px){.wrap{padding:6.5rem 1.25rem 4rem}.vc-ctl{opacity:1}}
+
+/* ---- shared site nav ---- */
+nav.pnav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,10,11,.88),transparent)}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.logo{font-family:var(--serif);font-size:1.25rem;font-weight:700;letter-spacing:-.02em;color:var(--text);cursor:pointer;text-decoration:none}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{font-family:var(--mono);font-size:.7rem;font-weight:300;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .3s;position:relative}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:1px;background:var(--accent)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;z-index:101}
+.hamburger span{width:24px;height:1.5px;background:var(--text);transition:all .3s;display:block}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:99;background:rgba(10,10,11,.97);backdrop-filter:blur(30px);flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:2rem;color:var(--text-dim);text-decoration:none;transition:color .3s}
+.mobile-menu a:hover{color:var(--accent)}
+@media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}}
 </style>
 </head>
 <body>
 <div class="site-grain"></div>
-<div class="topbar">
-  <a class="back" href="/">fragments<span>.</span></a>
-  <div class="label">Motion</div>
-</div>
+<nav class="pnav"><a href="/" class="logo">fragments<span>.</span></a><div class="nav-right"><ul class="nav-links"><a href="/#home">home</a><a href="/#music">music</a><a href="/#gallery">gallery</a><a href="explore.html">explore</a><a href="visualize.html">visualize</a><a href="videos.html" class="active">videos</a><a href="/#about">about</a><a href="/#contact">contact</a></ul><button class="hamburger" id="hb"><span></span><span></span><span></span></button></div></nav><div class="mobile-menu" id="mm"><a href="/#home">home</a><a href="/#music">music</a><a href="/#gallery">gallery</a><a href="explore.html">explore</a><a href="visualize.html">visualize</a><a href="videos.html" class="active">videos</a><a href="/#about">about</a><a href="/#contact">contact</a></div>
 <div class="wrap">
   <div class="section-label">03 &mdash; Motion</div>
   <div class="section-title">Photography that <em>learned to move</em></div>
@@ -86,6 +103,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
   wire('v1','c1','ic1','card1');
   wire('v2','c2','ic2','card2');
 })();
+</script>
+<script>
+(function(){var hb=document.getElementById("hb"),mm=document.getElementById("mm");
+hb.addEventListener("click",function(){hb.classList.toggle("open");mm.classList.toggle("open")});
+mm.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){hb.classList.remove("open");mm.classList.remove("open")})});})();
 </script>
 </body>
 </html>
