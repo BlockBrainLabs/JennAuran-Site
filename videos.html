@@ -57,6 +57,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
         <span class="vc-tag">Ambient Study</span>
       </div>
     </div>
+    <div class="video-item">
+      <div class="video-card" id="card2">
+        <video id="v2" autoplay muted loop playsinline preload="metadata" src="videos/petals-ambient.mp4"></video>
+        <button class="vc-ctl" id="c2" aria-label="Pause video">
+          <svg id="ic2" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2.5" y="1.5" width="3" height="11" rx=".5" fill="currentColor"/><rect x="8.5" y="1.5" width="3" height="11" rx=".5" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="vc-meta">
+        <span class="vc-num">NO. 02</span>
+        <span class="vc-title">Petals</span>
+        <span class="vc-tag">Ambient Study</span>
+      </div>
+    </div>
   </div>
 </div>
 <script>
@@ -71,6 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
     set(true);
   }
   wire('v1','c1','ic1','card1');
+  wire('v2','c2','ic2','card2');
 })();
 </script>
 </body>
