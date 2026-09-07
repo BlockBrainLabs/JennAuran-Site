@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fragments: Moments in Between</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="images/cover-800.webp" type="image/webp">
 <meta name="description" content="Fragments: Moments in Between. Twelve original tracks and a gallery of macro photography by Jenn Auran. An exploration of the spaces between photographs.">
 <meta property="og:title" content="Fragments: Moments in Between">
 <meta property="og:description" content="Twelve original tracks and a gallery of macro photography by Jenn Auran. The sounds you hear when the shutter closes and the world continues without you.">
@@ -100,6 +103,24 @@ section{padding:8rem 3rem;position:relative}
 .td-close:hover,.td-close:active{background:rgba(200,168,124,.15);color:var(--accent)}
 .td-hero{min-height:45vh;display:flex;align-items:flex-end;padding:3rem 2rem 3rem;position:relative;overflow:hidden}
 .td-hero-bg{position:absolute;inset:0}
+::selection{background:rgba(200,168,124,.35);color:#f5f1e8}
+.track-num{position:relative}
+.track-num::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-left:7px solid var(--accent);border-top:5px solid transparent;border-bottom:5px solid transparent;opacity:0;transition:opacity .2s}
+.track:hover .track-num{color:transparent}
+.track:hover .track-num::after{opacity:1}
+.track-title{transition:color .2s}
+.track:hover .track-title{color:#f5f1e8}
+.album-art-wrapper{transition:transform .6s cubic-bezier(.2,.6,.2,1)}
+.album-art{transition:box-shadow .6s ease}
+.album-art-wrapper:hover{transform:scale(1.02)}
+.album-art-wrapper:hover .album-art{box-shadow:0 50px 100px rgba(0,0,0,.65)}
+.photo-card img{transition:transform .8s cubic-bezier(.2,.6,.2,1)}
+.photo-card:hover img{transform:scale(1.03)}
+.img-fade{opacity:0;transition:opacity .6s ease}
+.img-fade.loaded{opacity:1}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.img-fade{opacity:1;transition:none}.album-art-wrapper,.photo-card img,.track-title{transition:none}}
 .td-hero-content{position:relative;z-index:1;max-width:700px;width:100%}
 .td-track-num{font-family:var(--mono);font-size:4rem;font-weight:300;color:rgba(200,168,124,.1);line-height:1;margin-bottom:-.25rem;letter-spacing:-.05em}
 .td-track-title{font-family:var(--serif);font-size:clamp(1.6rem,5vw,3rem);font-weight:400;line-height:1.15;letter-spacing:-.02em;margin-bottom:.5rem}
@@ -404,6 +425,22 @@ var hb=document.getElementById("hb"),mm=document.getElementById("mm");
 hb.addEventListener("click",function(){hb.classList.toggle("open");mm.classList.toggle("open")});
 mm.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){hb.classList.remove("open");mm.classList.remove("open")})});
 window.addEventListener("scroll",function(){document.getElementById("mainNav").classList.toggle("scrolled",window.scrollY>60);var bg=document.getElementById("heroBg");if(bg)bg.style.transform="translateY("+window.scrollY*.2+"px)";["home","music","gallery","about","contact"].forEach(function(id){var el=document.getElementById(id);if(!el)return;var r=el.getBoundingClientRect();if(r.top<window.innerHeight*.5&&r.bottom>window.innerHeight*.3)document.querySelectorAll(".nav-links a").forEach(function(a){a.classList.toggle("active",a.getAttribute("href")==="#"+id)})})},{passive:true});
+</script>
+<script>
+(function(){
+  var fades=document.querySelectorAll('.album-art img,.photo-card img,img[src="images/portrait.jpg"]');
+  fades.forEach(function(im){im.classList.add('img-fade');
+    if(im.complete&&im.naturalWidth>0){im.classList.add('loaded');}
+    else{im.addEventListener('load',function(){im.classList.add('loaded');});
+         im.addEventListener('error',function(){im.classList.add('loaded');});}
+  });
+  var rvs=document.querySelectorAll('.section-label,.section-title,.section-desc');
+  rvs.forEach(function(el){el.classList.add('rv');});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.2});
+    rvs.forEach(function(el){io.observe(el);});
+  } else { rvs.forEach(function(el){el.classList.add('in');}); }
+})();
 </script>
 </body>
 </html>
