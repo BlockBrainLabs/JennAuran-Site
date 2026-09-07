@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion | Fragments: Moments in Between</title>
+<meta name="description" content="Motion studies and song trailers from Fragments: Moments in Between. Photography that learned to move.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0b;--text:#e8e6e3;--text-dim:#7a7872;--text-muted:#4a4944;--accent:#c8a87c;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;min-height:100vh}
+.site-grain{position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.015;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.5rem;background:linear-gradient(to bottom,rgba(10,10,11,.85),transparent)}
+.back{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--text);text-decoration:none}
+.back span{color:var(--accent)}
+.label{font-family:var(--mono);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim)}
+.wrap{max-width:1100px;margin:0 auto;padding:7.5rem 2rem 5rem}
+.section-label{font-family:var(--mono);font-size:.6rem;font-weight:300;letter-spacing:.35em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem}
+.section-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.5rem);font-weight:400;line-height:1.1;margin-bottom:1.5rem}
+.section-title em{font-style:italic;color:var(--accent)}
+.section-desc{font-size:1rem;color:var(--text-dim);line-height:1.7;max-width:34rem;margin-bottom:3.5rem}
+.video-grid{display:grid;grid-template-columns:1fr;gap:3rem}
+.video-card{position:relative;border-radius:4px;overflow:hidden;background:#000;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.video-card video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+.vc-ctl{position:absolute;right:1rem;bottom:1rem;z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid rgba(200,168,124,.4);background:rgba(10,10,11,.55);backdrop-filter:blur(8px);color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;opacity:0;touch-action:manipulation}
+.video-card:hover .vc-ctl,.vc-ctl:focus-visible,.video-card.paused .vc-ctl{opacity:1}
+.vc-ctl:hover{background:rgba(200,168,124,.15);border-color:var(--accent)}
+.vc-meta{display:flex;align-items:baseline;gap:1rem;margin-top:1.1rem}
+.vc-num{font-family:var(--mono);font-size:.65rem;letter-spacing:.2em;color:var(--text-muted)}
+.vc-title{font-family:var(--serif);font-size:1.25rem;font-weight:400}
+.vc-tag{font-family:var(--mono);font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-left:auto}
+@media(max-width:700px){.wrap{padding:6.5rem 1.25rem 4rem}.vc-ctl{opacity:1}}
+</style>
+</head>
+<body>
+<div class="site-grain"></div>
+<div class="topbar">
+  <a class="back" href="/">fragments<span>.</span></a>
+  <div class="label">Motion</div>
+</div>
+<div class="wrap">
+  <div class="section-label">03 &mdash; Motion</div>
+  <div class="section-title">Photography that <em>learned to move</em></div>
+  <div class="section-desc">Motion studies from the gallery, and soon, a trailer for every song on the album. Each piece begins as a photograph and remembers where it came from.</div>
+  <div class="video-grid">
+    <div class="video-item">
+      <div class="video-card" id="card1">
+        <video id="v1" autoplay muted loop playsinline preload="metadata" src="videos/bluerose-ambient.mp4"></video>
+        <button class="vc-ctl" id="c1" aria-label="Pause video">
+          <svg id="ic1" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2.5" y="1.5" width="3" height="11" rx=".5" fill="currentColor"/><rect x="8.5" y="1.5" width="3" height="11" rx=".5" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="vc-meta">
+        <span class="vc-num">NO. 01</span>
+        <span class="vc-title">Blue Rose</span>
+        <span class="vc-tag">Ambient Study</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var playSvg='<path d="M3.5 1.5L12 7L3.5 12.5V1.5Z" fill="currentColor"/>';
+  var pauseSvg='<rect x="2.5" y="1.5" width="3" height="11" rx=".5" fill="currentColor"/><rect x="8.5" y="1.5" width="3" height="11" rx=".5" fill="currentColor"/>';
+  function wire(vid,btn,icon,card){
+    var v=document.getElementById(vid),b=document.getElementById(btn),ic=document.getElementById(icon),c=document.getElementById(card);
+    function set(playing){ic.innerHTML=playing?pauseSvg:playSvg;b.setAttribute('aria-label',playing?'Pause video':'Play video');c.classList.toggle('paused',!playing)}
+    b.addEventListener('click',function(){ if(v.paused){v.play();set(true)} else {v.pause();set(false)} });
+    v.addEventListener('click',function(){ if(v.paused){v.play();set(true)} else {v.pause();set(false)} });
+    set(true);
+  }
+  wire('v1','c1','ic1','card1');
+})();
+</script>
+</body>
+</html>
