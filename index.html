@@ -399,7 +399,7 @@ document.getElementById("tdR").addEventListener("touchend",function(e){e.prevent
 
 
 var cf=document.getElementById("contactForm");
-if(cf){cf.addEventListener("submit",function(e){e.preventDefault();var btn=document.getElementById("cfBtn"),msg=document.getElementById("cfMsg");btn.disabled=true;btn.textContent="Sending\u2026";fetch("https://contact.jennauran.com",{method:"POST",body:new FormData(cf)}).then(function(r){return r.json()}).then(function(d){msg.style.display="block";if(d.ok){msg.textContent="Message sent. I\u2019ll be in touch.";msg.style.color="var(--accent)";cf.reset()}else{msg.textContent="Something went wrong. Please email me directly.";msg.style.color="#e06050"}}).catch(function(){msg.style.display="block";msg.textContent="Something went wrong. Please email me directly.";msg.style.color="#e06050"}).finally(function(){btn.disabled=false;btn.textContent="Send Message"})})}
+if(cf){cf.addEventListener("submit",function(e){e.preventDefault();var msg=document.getElementById("cfMsg");var n=cf.elements.name.value.trim(),em=cf.elements.email.value.trim(),m=cf.elements.message.value.trim();var body="Name: "+n+"\nEmail: "+em+"\n\n"+m;window.location.href="mailto:jenn@jennauran.com?subject="+encodeURIComponent("Site contact from "+n)+"&body="+encodeURIComponent(body);msg.style.display="block";msg.textContent="Your email app is opening with the message ready \u2014 just hit send.";msg.style.color="var(--accent)"})}
 var hb=document.getElementById("hb"),mm=document.getElementById("mm");
 hb.addEventListener("click",function(){hb.classList.toggle("open");mm.classList.toggle("open")});
 mm.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){hb.classList.remove("open");mm.classList.remove("open")})});
